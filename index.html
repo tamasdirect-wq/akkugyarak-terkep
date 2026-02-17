@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8" />
+<title>MO-i akkugyár térkép – rétegek</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+html, body { height:100%; margin:0; }
+#map { height:100%; width:100%; }
+
+.legend {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: white;
+    padding: 10px;
+    z-index: 9999;
+    font-size: 14px;
+    border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<div class="legend">
+<b>MO-i akkugyár térkép</b><br><br>
+🔴 Cellagyár<br>
+🟠 Alkatrész<br>
+🟡 Összeszerelés<br>
+🟢 Beszállítók<br>
+🔵 Hulladék<br>
+⚫ Egyéb
+</div>
+
+<script>
+
+var map = L.map('map').setView([47.1, 19.5], 7);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+
+// 🔴 CELLAGYÁR
+var red = L.layerGroup([
+    L.marker([47.5316,21.6273]).bindPopup("Debrecen – CATL"),
+    L.marker([47.6834,19.1342]).bindPopup("Göd – Samsung SDI"),
+    L.marker([47.7432,18.1190]).bindPopup("Komárom – SK On"),
+    L.marker([47.1560,18.8180]).bindPopup("Iváncsa – SK On"),
+    L.marker([48.1031,20.7784]).bindPopup("Miskolc – GS Yuasa")
+]).addTo(map);
+
+// 🟠 ALKATRÉSZ
+var orange = L.layerGroup([
+    L.marker([47.5316,21.6273]).bindPopup("Debrecen – EcoPro BM / Semcorp"),
+    L.marker([47.9554,21.7167]).bindPopup("Nyíregyháza – W-Scope"),
+    L.marker([47.7600,18.5560]).bindPopup("Nyergesújfalu – LG Chem / Toray"),
+    L.marker([47.4065,18.8296]).bindPopup("Sóskút – Dongwha"),
+    L.marker([47.5845,18.3936]).bindPopup("Tatabánya – Soulbrain / Solus"),
+    L.marker([47.6000,19.3550]).bindPopup("Gödöllő – Iljin Materials")
+]).addTo(map);
+
+// 🟡 ÖSSZESZERELÉS
+var yellow = L.layerGroup([
+    L.marker([47.7432,18.1190]).bindPopup("Komárom – Inzi Controls"),
+    L.marker([47.6170,19.1800]).bindPopup("Fót – összeszerelés"),
+    L.marker([47.5316,21.6273]).bindPopup("Debrecen – BMW"),
+    L.marker([47.4700,18.8200]).bindPopup("Biatorbágy – NIO")
+]).addTo(map);
+
+// 🟢 BESZÁLLÍTÓK
+var green = L.layerGroup([
+    L.marker([47.6000,19.3550]).bindPopup("Gödöllő – Kedali"),
+    L.marker([47.7800,19.1300]).bindPopup("Vác – logisztika"),
+    L.marker([47.3500,19.4500]).bindPopup("Monor – akkukeret"),
+    L.marker([47.5000,19.9200]).bindPopup("Jászberény – alkatrész"),
+    L.marker([47.5000,19.8000]).bindPopup("Pécel – gépipar"),
+    L.marker([48.0935,19.8053]).bindPopup("Salgótarján – precíziós"),
+    L.marker([47.5845,18.3936]).bindPopup("Tatabánya – Lotte Aluminium")
+]).addTo(map);
+
+// 🔵 HULLADÉK
+var blue = L.layerGroup([
+    L.marker([47.3450,19.0430]).bindPopup("Szigetszentmiklós – SungEel"),
+    L.marker([48.0140,19.8400]).bindPopup("Bátonyterenye – SungEel")
+]).addTo(map);
+
+// ⚫ EGYÉB
+var black = L.layerGroup([
+    L.marker([47.6875,17.6504]).bindPopup("Győr – beszállítók"),
+    L.marker([47.6170,19.1800]).bindPopup("Fót – logisztika"),
+    L.marker([47.5316,21.6273]).bindPopup("Debrecen – ökoszisztéma")
+]).addTo(map);
+
+L.control.layers(null, {
+    "🔴 Cellagyár": red,
+    "🟠 Alkatrész": orange,
+    "🟡 Összeszerelés": yellow,
+    "🟢 Beszállítók": green,
+    "🔵 Hulladék": blue,
+    "⚫ Egyéb": black
+}).addTo(map);
+
+</script>
+
+</body>
+</html>
